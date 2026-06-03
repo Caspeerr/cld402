@@ -23,8 +23,8 @@ data "aws_ami" "amazon_linux" {
 }
 
 # Security Group
-resource "aws_security_group" "web_sg_sambrid" {
-  name        = "web-sg-sambrid"
+resource "aws_security_group" "web_sg_sambrid1" {
+  name        = "web-sg-sambrid1"
   description = "Allow HTTP and SSH"
   vpc_id      = data.aws_vpc.default.id
 
@@ -60,7 +60,7 @@ resource "aws_instance" "ec2" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type         = var.instance_type
   subnet_id             = data.aws_subnets.default.ids[0]
-  vpc_security_group_ids = [aws_security_group.web_sg_sambrid.id]
+  vpc_security_group_ids = [aws_security_group.web_sg_sambrid1.id]
 
   associate_public_ip_address = true
 
