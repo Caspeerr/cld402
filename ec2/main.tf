@@ -64,9 +64,31 @@ resource "aws_instance" "ec2" {
 
   associate_public_ip_address = true
 
-  key_name = "ec2-key-2"
+  key_name = var.key_name
 
   tags = {
     Name = var.instance_name
   }
+  user_data = <<-EOF
+              #!/bin/bash
+
+              dnf update -y
+
+              # Install Node.js 20
+              curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
+
+              dnf install -y nodejs git nginx
+
+              # Install PM2
+              npm install -g pm2
+
+              # Create application directory
+              mkdir -p /home/ec2-user/nodeapp
+
+              chown -R ec2-user:ec2-user /home/ec2-user/nodeapp
+
+              # Start nginx
+              systemctl enable nginx
+              systemctl start nginx
+              EOF
 }
