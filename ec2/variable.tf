@@ -7,7 +7,7 @@ variable "instance_type" {
 }
 
 variable "instance_name" {
-  default = "Sambrid-ec2"
+  default = "sambrid-ec2"
 }
 
 variable "key_name" {
